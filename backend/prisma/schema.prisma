@@ -1,14 +1,66 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Role {
+  CLIENTE
+  ADMIN
+}
+
+enum TicketStatus {
+  DISPONIBLE
+  RESERVADO
+  VENDIDO
+}
+
+model User {
+  id        String    @id @default(uuid())
+  nombre    String
+  email     String    @unique
+  password  String
+  rol       Role      @default(CLIENTE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  ordenes   Order[]
+}
+
+model Concert {
+  id          String   @id @default(uuid())
+  titulo      String
+  fecha       DateTime
+  lugar       String
+  capacidad   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+
+  tickets     Ticket[]
+}
+
+model Order {
+  id           String   @id @default(uuid())
+  total        Decimal
+  fecha_compra DateTime @default(now())
+
+  usuarioId    String
+  usuario      User     @relation(fields: [usuarioId], references: [id])
+
+  tickets      Ticket[]
+}
+
+model Ticket {
+  id           String       @id @default(uuid())
+  precio       Decimal
+  estado       TicketStatus @default(DISPONIBLE)
+
+  conciertoId  String
+  concierto    Concert      @relation(fields: [conciertoId], references: [id])
+
+  orderId      String?
+  orden        Order?       @relation(fields: [orderId], references: [id])
 }
