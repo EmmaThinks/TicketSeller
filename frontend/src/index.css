@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: "JetBrainsMono Nerd Font";
+    src: url("./assets/fonts/Jetbrains\ Mono/JetBrainsMono-Regular.woff2")
+        format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Trebuchet";
+    src: url("./assets/fonts/Trebutchet/trebuc.ttf") format("ttf");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-Jetbrains: "JetBrainsMono Nerd Font", monospace;
+}
+
+@theme {
+    --font-Trebuchet: "Trebuchet", monospace;
+}
