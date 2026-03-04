@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <nav className="w-full h-10 bg-black text-white flex flex-row items-center select-none">
+      <nav className="w-full h-10 bg-gray-700 text-white flex flex-row items-center select-none">
         <a className="ml-10">/</a>
         <NavLink to="/" className={defaultClassNLink}>
           {" "}
