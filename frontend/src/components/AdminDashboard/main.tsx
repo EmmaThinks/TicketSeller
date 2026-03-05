@@ -2,12 +2,15 @@ import { NavLink, Outlet } from "react-router-dom";
 
 function MainAdmin() {
   const optionClassName = ({ isActive }: { isActive: boolean }) =>
-    `text-amber-50 h-10 w-[90%] flex items-center justify-center m-2 rounded transition-all duration-300 ${isActive ? "bg-gray-800" : "shadow-xl bg-gray-700"}`;
+    `text-black h-10 w-[90%] flex items-center justify-center m-2 rounded transition-all duration-300 ${isActive ? "bg-gray-700 text-white" : ""}`;
 
   return (
     <>
       <main className="bg-white grid grid-cols-4 gap-4 min-h-screen min-w-screen">
-        <nav className="w-1/2 bg-gray-900 flex flex-col">
+        <nav className="w-1/2 bg-nav_steel_gray flex flex-col">
+          <NavLink to="" className={optionClassName}>
+            Perfil
+          </NavLink>
           <NavLink to="AddConcert" className={optionClassName}>
             Añadir Concierto
           </NavLink>

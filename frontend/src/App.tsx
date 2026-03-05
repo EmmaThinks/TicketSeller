@@ -9,13 +9,12 @@ import EditConcert from "./components/AdminDashboard//Utility/editConcert";
 
 function App() {
   const defaultClassNLink = ({ isActive }: { isActive: boolean }) =>
-    `text-center transition-all duration-300 bg-gray-200 ml-1 mr-1 flex items-center justify-center h-full ${isActive ? "w-40 text-2xl text-blue-400" : "w-30"} `;
+    `text-center transition-all duration-300 ml-1 mr-1 flex items-center justify-center h-[70%] w-30 rounded ${isActive ? "bg-gray-700 text-white" : ""} `;
 
   return (
     <>
-      <nav className="w-full h-10 bg-white text-black flex flex-row items-center select-none shadow-2xl shadow-black">
+      <nav className="sticky top-0 z-50 font-bold w-full h-10 bg-nav_steel_gray text-black flex flex-row items-center select-none">
         <NavLink to="/" className={defaultClassNLink}>
-          {" "}
           PRINCIPAL
         </NavLink>
         <NavLink to="/Concerts" className={defaultClassNLink}>

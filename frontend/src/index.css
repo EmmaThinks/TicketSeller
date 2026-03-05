@@ -9,12 +9,33 @@
     font-display: swap;
 }
 
+/* COLORES */
+@theme {
+    --color-nav_steel_gray: #c0c0c0;
+}
+
 @font-face {
     font-family: "Trebuchet";
     src: url("./assets/fonts/Trebutchet/trebuc.ttf") format("ttf");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+}
+
+@theme {
+    /* Definimos la clase de animación */
+    --animate-gradient: gradient 5s ease infinite;
+
+    /* Creamos los keyframes para mover el fondo */
+    @keyframes gradient {
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+    }
 }
 
 @theme {
