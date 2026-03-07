@@ -1,47 +1,62 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "JetBrainsMono Nerd Font";
-    src: url("./assets/fonts/Jetbrains\ Mono/JetBrainsMono-Regular.woff2")
-        format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "JetBrainsMono Nerd Font";
+  src: url("./assets/fonts/Jetbrains\ Mono/JetBrainsMono-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  --animate-gradient: gradient 2s ease infinite;
 }
 
 /* COLORES */
 @theme {
-    --color-nav_steel_gray: #c0c0c0;
+  --color-nav_steel_gray: #c0c0c0;
 }
 
 @font-face {
-    font-family: "Trebuchet";
-    src: url("./assets/fonts/Trebutchet/trebuc.ttf") format("ttf");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Trebuchet";
+  src: url("./assets/fonts/Trebutchet/trebuc.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme {
-    /* Definimos la clase de animación */
-    --animate-gradient: gradient 5s ease infinite;
+  /* Definimos la clase de animación */
+  --animate-gradient: gradient 5s ease infinite;
 
-    /* Creamos los keyframes para mover el fondo */
-    @keyframes gradient {
-        0%,
-        100% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
+  /* Creamos los keyframes para mover el fondo */
+  @keyframes gradient {
+    0%,
+    100% {
+      background-position: 0% 50%;
     }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 }
 
 @theme {
-    --font-Jetbrains: "JetBrainsMono Nerd Font", monospace;
+  --font-Jetbrains: "JetBrainsMono Nerd Font", monospace;
 }
 
 @theme {
-    --font-Trebuchet: "Trebuchet", monospace;
+  --font-Trebuchet: "Trebuchet", monospace;
 }

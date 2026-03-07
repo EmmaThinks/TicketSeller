@@ -13,7 +13,7 @@ const Card = ({
         <section className="w-full h-48  rounded-t-lg">
           <img src={srcImg} alt="Image" />
         </section>
-        <section className="w-full h-22 bg-white">
+        <section className="w-full h-22 bg-black">
           <h1 className="text-2xl">{band}asd</h1>
           <h2 className="">{desc}asd</h2>
         </section>

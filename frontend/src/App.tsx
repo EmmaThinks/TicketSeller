@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 font-bold w-full h-10 bg-nav_steel_gray text-black flex flex-row items-center select-none">
+      <nav className="sticky top-0 z-50 font-bold w-full h-13 bg-nav_steel_gray text-black flex flex-row items-center select-none">
         <NavLink to="/" className={defaultClassNLink}>
           PRINCIPAL
         </NavLink>

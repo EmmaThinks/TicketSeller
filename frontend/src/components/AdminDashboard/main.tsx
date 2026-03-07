@@ -7,7 +7,7 @@ function MainAdmin() {
   return (
     <>
       <main className="bg-white grid grid-cols-4 gap-4 min-h-screen min-w-screen">
-        <nav className="w-1/2 bg-nav_steel_gray flex flex-col">
+        <nav className="w-1/2 bg-nav_steel_gray flex flex-col select-none">
           <NavLink to="" className={optionClassName}>
             Perfil
           </NavLink>
