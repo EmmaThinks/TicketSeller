@@ -25,10 +25,22 @@ app.listen(PORT, () => {
 
 app.post("/api/conciertos", async (req, res) => {
   try {
-    const { titulo, fecha, lugar, capacidad, precio } = req.body;
+    const {
+      titulo,
+      fecha,
+      lugar,
+      capacidad,
+      precio,
+      banda,
+      descripcion,
+      fotoConcierto,
+    } = req.body;
     const nuevoConcierto = await prisma.concert.create({
       data: {
         titulo: titulo,
+        banda: banda,
+        fotoConcierto: fotoConcierto,
+        descripcion: descripcion,
         fecha: new Date(fecha),
         lugar: lugar,
         capacidad: parseInt(capacidad),
@@ -79,13 +91,17 @@ app.delete("/api/conciertos/:id", async (req, res) => {
 app.put("/api/conciertos/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, fecha, lugar } = req.body;
+    const { titulo, fecha, lugar, descripcion, banda, fotoConcierto } =
+      req.body;
 
     const datosAActualizar: any = {};
 
     if (titulo) datosAActualizar.titulo = titulo;
     if (lugar) datosAActualizar.lugar = lugar;
     if (fecha) datosAActualizar.fecha = new Date(fecha);
+    if (banda) datosAActualizar.banda = banda;
+    if (descripcion) datosAActualizar.descripcion = descripcion;
+    if (fotoConcierto) datosAActualizar.FotoConcierto = fotoConcierto;
 
     await prisma.concert.update({
       where: { id: id },

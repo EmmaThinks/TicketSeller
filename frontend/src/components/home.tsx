@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Footer from "./IndividualComponents/footer";
+import Card from "./IndividualComponents/concertCard";
 
 const backgroundImages = [
   "https://wmc.shop/cdn/shop/collections/grandson_jpg_184c5da8-ab6e-46a5-bf08-78e376cd04bb.webp?v=1762280946",
@@ -43,7 +44,7 @@ function Home() {
           </div>
         </section>
 
-        <section className="w-[90%] bg-nav_steel_gray mt-10 mb-10 h-[10vh] rounded-2xl border-solid flex items-center justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+        <section className="w-[90%] bg-nav_steel_gray mt-10 mb-10 h-[13vh] rounded-2xl border-solid flex items-center justify-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           <h1 className="select-none text-7xl font-bold text-black">
             Trending
           </h1>

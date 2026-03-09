@@ -19,27 +19,31 @@ enum TicketStatus {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  nombre    String
-  email     String    @unique
-  password  String
-  rol       Role      @default(CLIENTE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  ordenes   Order[]
+  id         String    @id @default(uuid())
+  nombre     String
+  email      String    @unique
+  password   String
+  rol        Role      @default(CLIENTE)
+  fotoPerfil String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  ordenes    Order[]
 }
 
 model Concert {
-  id          String   @id @default(uuid())
-  titulo      String
-  fecha       DateTime
-  lugar       String
-  capacidad   Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(uuid())
+  titulo        String
+  banda       String   @default("Por definir")
+  descripcion String   @default("Sin descripción")
+  fotoConcierto String?
+  fecha         DateTime
+  lugar         String
+  capacidad     Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-
-  tickets     Ticket[]
+  tickets       Ticket[]
 }
 
 model Order {
