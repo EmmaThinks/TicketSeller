@@ -18,10 +18,10 @@ export default function ConcertCard({
   lugar,
 }: Card) {
   const buttonClass =
-    "w-[45%] hover:w-[80%] rounded h-full bg-white text-black font-semibold transition-all duration-300 flex items-center justify-center";
+    "w-[45%] hover:w-[80%] hover:text-white hover:animate-gradient hover:bg-linear-to-r hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 hover:bg-[length:200%_auto] hover:transition-all hover:duration-1000 rounded h-full bg-white text-black font-semibold transition-all duration-1000 flex items-center justify-center";
 
   return (
-    <article className="h-[40vh] bg-nav_steel_gray w-[20vw] rounded-2xl flex flex-col drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] m-3 overflow-hidden">
+    <article className="h-[40vh] bg-gray-700 w-[20vw] rounded-2xl flex flex-col drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] m-3 overflow-hidden">
       <figure className="w-full h-[55%] bg-black m-0">
         <img
           src={foto}
@@ -47,7 +47,9 @@ export default function ConcertCard({
           Detalles
         </Link>
 
-        <button className={buttonClass}>Comprar</button>
+        <Link to={`/Concerts/${id}/comprar`} className={buttonClass}>
+          Comprar
+        </Link>
       </section>
     </article>
   );

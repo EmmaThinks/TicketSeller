@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Footer from "./IndividualComponents/footer";
-import Card from "./IndividualComponents/concertCard";
 
 const backgroundImages = [
   "https://wmc.shop/cdn/shop/collections/grandson_jpg_184c5da8-ab6e-46a5-bf08-78e376cd04bb.webp?v=1762280946",

@@ -4,6 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import cors from "cors";
 import "dotenv/config";
 import pg from "pg";
+import bcrypt from "bcryptjs";
 
 const app = express();
 const { Pool } = pg;
@@ -21,6 +22,61 @@ app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`Encendido en el puerto: ${PORT}`);
+});
+
+// --- SISTEMA DE USUARIOS ---
+app.post("/api/registro", async (req, res) => {
+  try {
+    const { nombre, email, password } = req.body;
+
+    const usuarioExistente = await prisma.user.findUnique({ where: { email } });
+    if (usuarioExistente) {
+      return res.status(400).json({ error: "El correo ya está en uso" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const nuevoUsuario = await prisma.user.create({
+      data: {
+        nombre,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    res.status(201).json({ mensaje: "Usuario creado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al registrar el usuario" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const usuario = await prisma.user.findUnique({ where: { email } });
+    if (!usuario) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+    const passwordCorrecto = await bcrypt.compare(password, usuario.password);
+    if (!passwordCorrecto) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+    res.status(200).json({
+      id: usuario.id,
+      nombre: usuario.nombre,
+      email: usuario.email,
+      rol: usuario.rol,
+      fotoPerfil: usuario.fotoPerfil,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al iniciar sesión" });
+  }
 });
 
 app.post("/api/conciertos", async (req, res) => {
