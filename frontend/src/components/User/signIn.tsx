@@ -40,7 +40,7 @@ export default function SignIn() {
   };
 
   return (
-    <main className="flex justify-center items-center min-h-[calc(100vh-3.5rem)] bg-gray-900 text-white p-6">
+    <main className="flex justify-center items-center min-h-[calc(100vh-3.5rem)] bg-white text-white p-6">
       <form
         onSubmit={handleSubmit}
         className="bg-gray-800 p-8 rounded-xl shadow-lg flex flex-col gap-5 w-full max-w-md"

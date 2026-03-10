@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ConcertCard from "./IndividualComponents/concertCard";
+import Footer from "./IndividualComponents/footer";
 
 interface ConcertData {
   id: string;
@@ -32,8 +33,8 @@ export default function Concerts() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white p-8 flex flex-col items-center">
-      <section className="w-[40%] bg-gray-600 text-white flex justify-center items-center h-[10vh] rounded-2xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
+    <main className="min-h-screen bg-white  flex flex-col items-center">
+      <section className="mt-10 w-[40%] bg-gray-600 text-white flex justify-center items-center h-[10vh] rounded-2xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] ">
         <h1 className="text-4xl font-bold text-center mb-10">
           Todos los Conciertos
         </h1>
@@ -56,6 +57,8 @@ export default function Concerts() {
           <p className="text-gray-400">Aún no hay conciertos programados.</p>
         )}
       </section>
+
+      <Footer />
     </main>
   );
 }
