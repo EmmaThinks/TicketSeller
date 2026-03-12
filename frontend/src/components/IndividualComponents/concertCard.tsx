@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Card {
   id: string;
@@ -17,6 +17,40 @@ export default function ConcertCard({
   fecha,
   lugar,
 }: Card) {
+  const navigate = useNavigate();
+
+  const handleComprar = async () => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      alert("Debes iniciar sesión para comprar boletos.");
+      return navigate("/LogIn");
+    }
+
+    const user = JSON.parse(storedUser);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/comprar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          usuarioId: user.id,
+          conciertoId: id,
+          cantidad: 1,
+        }),
+      });
+
+      if (response.ok) {
+        alert("¡Boleto comprado y añadido a tu cuenta!");
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error de conexión al procesar la compra.");
+    }
+  };
+
   const buttonClass =
     "w-[45%] hover:w-[80%] hover:text-white hover:animate-gradient hover:bg-linear-to-r hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 hover:bg-[length:200%_auto] hover:transition-all hover:duration-1000 rounded h-full bg-white text-black font-semibold transition-all duration-1000 flex items-center justify-center";
 
@@ -47,9 +81,9 @@ export default function ConcertCard({
           Detalles
         </Link>
 
-        <Link to={`/Concerts/${id}/comprar`} className={buttonClass}>
+        <button onClick={handleComprar} className={buttonClass}>
           Comprar
-        </Link>
+        </button>
       </section>
     </article>
   );

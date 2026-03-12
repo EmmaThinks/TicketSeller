@@ -8,9 +8,9 @@ import Concerts from "./components/Concerts";
 import AddConcert from "./components/AdminDashboard/Utility/addConcert";
 import EditConcert from "./components/AdminDashboard/Utility/editConcert";
 import ConcertDetails from "./components/concerts/ConcertDetails";
-import ConcertCheckout from "./components/concerts/ConcertCheckout";
 import SignIn from "./components/User/signIn";
 import LogIn from "./components/User/logIn";
+import AdminSummary from "./components/AdminDashboard/Utility/adminSummary";
 
 interface UserSession {
   id: string;
@@ -90,12 +90,10 @@ function App() {
         </div>
       </nav>
 
-      {/* RUTAS */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Concerts" element={<Concerts />} />
         <Route path="/Concerts/:id" element={<ConcertDetails />} />
-        <Route path="/Concerts/:id/comprar" element={<ConcertCheckout />} />
 
         <Route path="/AdminDashboard" element={<MainAdmin />}>
           <Route path="AddConcert" element={<AddConcert />} />
@@ -106,6 +104,11 @@ function App() {
 
         <Route path="/LogIn" element={<LogIn />} />
         <Route path="/SignIn" element={<SignIn />} />
+        <Route path="/AdminDashboard" element={<MainAdmin />}>
+          <Route index element={<AdminSummary />} />
+          <Route path="AddConcert" element={<AddConcert />} />
+          <Route path="EditConcert" element={<EditConcert />} />
+        </Route>
       </Routes>
     </>
   );

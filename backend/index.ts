@@ -157,7 +157,7 @@ app.put("/api/conciertos/:id", async (req, res) => {
     if (fecha) datosAActualizar.fecha = new Date(fecha);
     if (banda) datosAActualizar.banda = banda;
     if (descripcion) datosAActualizar.descripcion = descripcion;
-    if (fotoConcierto) datosAActualizar.FotoConcierto = fotoConcierto;
+    if (fotoConcierto) datosAActualizar.fotoConcierto = fotoConcierto;
 
     await prisma.concert.update({
       where: { id: id },
@@ -170,5 +170,131 @@ app.put("/api/conciertos/:id", async (req, res) => {
     res.status(500).json({
       data: "Hubo un problema intentando editar el concierto",
     });
+  }
+});
+
+app.post("/api/comprar", async (req, res) => {
+  try {
+    const { usuarioId, conciertoId, cantidad = 1 } = req.body;
+
+    const ticketsDisponibles = await prisma.ticket.findMany({
+      where: {
+        conciertoId: conciertoId,
+        estado: "DISPONIBLE",
+      },
+      take: cantidad,
+    });
+
+    if (ticketsDisponibles.length < cantidad) {
+      return res
+        .status(400)
+        .json({ error: "No hay suficientes boletos disponibles (Sold Out)" });
+    }
+
+    const total = ticketsDisponibles.reduce(
+      (acc, ticket) => acc + Number(ticket.precio),
+      0,
+    );
+
+    const nuevaOrden = await prisma.$transaction(async (tx) => {
+      const orden = await tx.order.create({
+        data: {
+          usuarioId: usuarioId,
+          total: total,
+        },
+      });
+
+      const ticketIds = ticketsDisponibles.map((t) => t.id);
+
+      await tx.ticket.updateMany({
+        where: { id: { in: ticketIds } },
+        data: {
+          estado: "VENDIDO",
+          orderId: orden.id,
+        },
+      });
+
+      return orden;
+    });
+
+    res
+      .status(200)
+      .json({ mensaje: "¡Compra realizada con éxito!", orden: nuevaOrden });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error procesando la transacción" });
+  }
+});
+
+app.get("/api/usuarios/:id/ordenes", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const ordenes = await prisma.order.findMany({
+      where: { usuarioId: id },
+      include: {
+        tickets: {
+          include: {
+            concierto: true,
+          },
+        },
+      },
+      orderBy: {
+        fecha_compra: "desc",
+      },
+    });
+
+    res.status(200).json(ordenes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error al obtener los boletos" });
+  }
+});
+
+app.get("/api/conciertos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const concierto = await prisma.concert.findUnique({
+      where: { id: id },
+    });
+
+    if (!concierto) {
+      return res.status(404).json({ error: "Concierto no encontrado" });
+    }
+
+    res.status(200).json(concierto);
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Error obteniendo los detalles del concierto" });
+  }
+});
+
+app.get("/api/admin/stats", async (req, res) => {
+  try {
+    const totalConciertos = await prisma.concert.count();
+
+    const totalUsuarios = await prisma.user.count({
+      where: { rol: "CLIENTE" },
+    });
+
+    const ticketsVendidos = await prisma.ticket.count({
+      where: { estado: "VENDIDO" },
+    });
+
+    const ingresos = await prisma.order.aggregate({
+      _sum: { total: true },
+    });
+
+    res.status(200).json({
+      conciertos: totalConciertos,
+      usuarios: totalUsuarios,
+      ticketsVendidos: ticketsVendidos,
+      ingresosTotales: ingresos._sum.total || 0,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error obteniendo estadísticas" });
   }
 });
